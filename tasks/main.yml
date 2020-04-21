@@ -34,6 +34,5 @@
     block: |
       Host {{ item.host }}
         IdentityFile {{ ssh_private_key_dest_path }}
-  with_items: "{{ssh_host_usewith}}" 
+  with_items: "{{ ssh_host_usewith }}"
   when: ssh_host_usewith is defined
-
