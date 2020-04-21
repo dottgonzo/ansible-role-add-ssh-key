@@ -18,13 +18,13 @@
   when: ssh_public_key_content is defined
 
 
-- name: Create ssh config directory
+- name: Create ssh config file
   file:
     path: "{{ ansible_ssh_config_dir }}"
     state: touch
     owner: "{{ ssh_user_owner }}"
     group: "{{ ssh_user_owner }}"
-    mode: "0700"
+    mode: "-rw-r--r--"
   when: ssh_host_usewith is defined
 
 
