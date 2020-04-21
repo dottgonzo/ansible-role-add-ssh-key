@@ -21,7 +21,7 @@
 - name: Create ssh config directory
   file:
     path: "{{ ansible_ssh_config_dir }}"
-    state: file
+    state: touch
     owner: "{{ ssh_user_owner }}"
     group: "{{ ssh_user_owner }}"
     mode: "0700"
