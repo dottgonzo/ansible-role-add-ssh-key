@@ -14,6 +14,9 @@
     ssh_user_owner: "{{ item.ssh_user_owner }}"
     ansible_ssh_config_dir: "{{ item.ansible_ssh_config_dir }}"
     ssh_host_usewith: "{{ item.ssh_host_usewith }}"
+    ssh_private_key_content: "{{ item.ssh_private_key_content }}"
+    ssh_public_key_content: "{{ item.ssh_public_key_content }}"
+    ssh_public_key_content: "{{ item.ssh_public_key_content }}"
   when: 
     - ssh_private_key_dest_path is undefined
     - keys is defined
