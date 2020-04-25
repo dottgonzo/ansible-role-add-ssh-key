@@ -8,14 +8,16 @@
 - name: Add Multiple ssh sshkeys
   include_tasks: addkey.yml
   loop: "{{ sshkeys if sshkeys is defined else [] }}"
+  loop_control:
+    loop_var: ssh_key_item
   vars:
-    ssh_private_key_dest_path: "{{ item.ssh_private_key_dest_path }}"
-    ssh_public_key_dest_path: "{{ item.ssh_public_key_dest_path }}"
-    ssh_user_owner: "{{ item.ssh_user_owner }}"
-    ansible_ssh_config_dir: "{{ item.ansible_ssh_config_dir }}"
-    ssh_host_usewith: "{{ item.ssh_host_usewith }}"
-    ssh_private_key_content: "{{ item.ssh_private_key_content }}"
-    ssh_public_key_content: "{{ item.ssh_public_key_content }}"
+    ssh_private_key_dest_path: "{{ ssh_key_item.ssh_private_key_dest_path }}"
+    ssh_public_key_dest_path: "{{ ssh_key_item.ssh_public_key_dest_path }}"
+    ssh_user_owner: "{{ ssh_key_item.ssh_user_owner }}"
+    ansible_ssh_config_dir: "{{ ssh_key_item.ansible_ssh_config_dir }}"
+    ssh_host_usewith: "{{ ssh_key_item.ssh_host_usewith }}"
+    ssh_private_key_content: "{{ ssh_key_item.ssh_private_key_content }}"
+    ssh_public_key_content: "{{ ssh_key_item.ssh_public_key_content }}"
   when: 
     - ssh_private_key_dest_path is undefined
     - sshkeys is defined
