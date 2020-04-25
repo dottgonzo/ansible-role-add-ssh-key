@@ -1,13 +1,13 @@
 ---
-- name: Include task list in play
+- name: Add a Single ssh Key
   include_tasks: addkey.yml
   when: 
     - ssh_private_key_dest_path is defined
     - keys is undefined
 
-- name: Include task list in play
+- name: Add Multiple ssh keys
   include_tasks: addkey.yml
-  loop: "{{ keys }}"
+  loop: "{{ keys if keys is defined else [] }}"
   vars:
     ssh_private_key_dest_path: "{{ item.ssh_private_key_dest_path }}"
     ssh_public_key_dest_path: "{{ item.ssh_public_key_dest_path }}"
