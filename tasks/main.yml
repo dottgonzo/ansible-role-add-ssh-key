@@ -26,6 +26,7 @@
     group: "{{ ssh_user_owner }}"
     mode: "-rw-r--r--"
   when: ssh_host_usewith is defined
+  changed_when: false
 
 
 - name: add key for precise hosts
