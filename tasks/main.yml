@@ -3,11 +3,11 @@
   include_tasks: addkey.yml
   when: 
     - ssh_private_key_dest_path is defined
-    - keys is undefined
+    - sshkeys is undefined
 
-- name: Add Multiple ssh keys
+- name: Add Multiple ssh sshkeys
   include_tasks: addkey.yml
-  loop: "{{ keys if keys is defined else [] }}"
+  loop: "{{ sshkeys if sshkeys is defined else [] }}"
   vars:
     ssh_private_key_dest_path: "{{ item.ssh_private_key_dest_path }}"
     ssh_public_key_dest_path: "{{ item.ssh_public_key_dest_path }}"
@@ -18,4 +18,4 @@
     ssh_public_key_content: "{{ item.ssh_public_key_content }}"
   when: 
     - ssh_private_key_dest_path is undefined
-    - keys is defined
+    - sshkeys is defined
