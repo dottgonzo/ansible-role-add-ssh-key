@@ -19,5 +19,4 @@
     ssh_private_key_content: "{{ ssh_key_item.ssh_private_key_content }}"
     ssh_public_key_content: "{{ ssh_key_item.ssh_public_key_content }}"
   when: 
-    - ssh_private_key_dest_path is undefined
     - sshkeys is defined
