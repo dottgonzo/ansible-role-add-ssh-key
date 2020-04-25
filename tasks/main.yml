@@ -1,41 +1,19 @@
 ---
-- name: Copy id_rsa key
-  copy:
-    dest: "{{ ssh_private_key_dest_path }}"
-    content: "{{ ssh_private_key_content }}"
-    owner: "{{ ssh_user_owner }}"
-    group: "{{ ssh_user_owner }}"
-    mode: "600"
+- name: Include task list in play
+  include_tasks: addkey.yml
+  when: 
+    - ssh_private_key_dest_path is defined
+    - keys is undefined
 
-
-- name: Copy id_rsa.pub key
-  copy:
-    dest: "{{ ssh_public_key_dest_path }}"
-    content: "{{ ssh_public_key_content }}"
-    owner: "{{ ssh_user_owner }}"
-    group: "{{ ssh_user_owner }}"
-    mode: "600"
-  when: ssh_public_key_content is defined
-
-
-- name: Create ssh config file
-  file:
-    path: "{{ ansible_ssh_config_dir }}"
-    state: touch
-    owner: "{{ ssh_user_owner }}"
-    group: "{{ ssh_user_owner }}"
-    mode: "-rw-r--r--"
-  when: ssh_host_usewith is defined
-  changed_when: false
-
-
-- name: add key for precise hosts
-  blockinfile:
-    path: "{{ ansible_ssh_config_dir }}"
-    block: |
-      Host {{ item.host }}
-        UserKnownHostsFile=/dev/null
-        StrictHostKeyChecking=no
-        IdentityFile {{ ssh_private_key_dest_path }}
-  with_items: "{{ ssh_host_usewith }}"
-  when: ssh_host_usewith is defined
+- name: Include task list in play
+  include_tasks: addkey.yml
+  loop: "{{ keys }}"
+  vars:
+    ssh_private_key_dest_path: "{{ item.ssh_private_key_dest_path }}"
+    ssh_public_key_dest_path: "{{ item.ssh_public_key_dest_path }}"
+    ssh_user_owner: "{{ item.ssh_user_owner }}"
+    ansible_ssh_config_dir: "{{ item.ansible_ssh_config_dir }}"
+    ssh_host_usewith: "{{ item.ssh_host_usewith }}"
+  when: 
+    - ssh_private_key_dest_path is undefined
+    - keys is defined
