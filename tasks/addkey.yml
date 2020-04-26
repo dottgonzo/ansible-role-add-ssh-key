@@ -1,5 +1,5 @@
 ---
-- name: Copy id_rsa key
+- name: Copy private key "{{ ssh_private_key_dest_path | basename }}"
   copy:
     dest: "{{ ssh_private_key_dest_path }}"
     content: "{{ ssh_private_key_content }}"
@@ -8,7 +8,7 @@
     mode: "600"
 
 
-- name: Copy id_rsa.pub key
+- name: Copy public key "{{ ssh_public_key_dest_path | basename }}"
   copy:
     dest: "{{ ssh_public_key_dest_path }}"
     content: "{{ ssh_public_key_content }}"
@@ -28,8 +28,7 @@
   when: ssh_host_usewith is defined
   changed_when: false
 
-
-- name: add key for precise hosts
+- name: set key for precise hosts
   blockinfile:
     path: "{{ ansible_ssh_config_dir }}"
     block: |
