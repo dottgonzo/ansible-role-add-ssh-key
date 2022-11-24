@@ -30,7 +30,7 @@
 
 - name: set key for precise hosts
   blockinfile:
-    marker: "#item-{{ ssh_host_item.host }}"
+    marker: "#ssh-git-{{ ssh_host_item.host }}-{mark}"
     path: "{{ ansible_ssh_config_dir }}"
     block: |
       Host {{ ssh_host_item.host }}
