@@ -34,8 +34,6 @@
     path: "{{ ansible_ssh_config_dir }}"
     block: |
       Host {{ ssh_host_item.host }}
-        UserKnownHostsFile=/dev/null
-        StrictHostKeyChecking=no
         IdentityFile {{ ssh_private_key_dest_path }}
   with_items: "{{ ssh_host_usewith }}"
   loop_control:
