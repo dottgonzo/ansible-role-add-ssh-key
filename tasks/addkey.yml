@@ -24,7 +24,7 @@
     state: touch
     owner: "{{ ssh_user_owner }}"
     group: "{{ ssh_user_owner }}"
-    mode: "-rw-r--r--"
+    mode: 0600
   when: ssh_host_usewith is defined
   changed_when: false
 
