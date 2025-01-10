@@ -35,6 +35,7 @@
     block: |
       Host {{ ssh_host_item.host }}
         IdentityFile {{ ssh_private_key_dest_path }}
+        StrictHostKeyChecking no
   with_items: "{{ ssh_host_usewith }}"
   loop_control:
     loop_var: ssh_host_item
